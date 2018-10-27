@@ -12,16 +12,16 @@ import com.locadora.api.services.VeiculoService;
 
 @RestController
 @RequestMapping(value = "/veiculos")
-public class VeiculoServiceResource {
+public class VeiculoResource {
 
 	@Autowired
 	private VeiculoService service;
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Veiculo> find(@PathVariable Integer id) {
 		
-		Veiculo obj = service.buscar(id);
+		Veiculo obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 
 	}

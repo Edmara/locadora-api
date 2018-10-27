@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.locadora.api.domain.Venda;
-import com.locadora.api.services.VendaService;
+import com.locadora.api.domain.Reserva;
+import com.locadora.api.services.ReservaService;
 
 @RestController
-@RequestMapping(value = "/vendas")
-public class VendaServiceResource {
+@RequestMapping(value = "/reservas")
+public class ReservaResource {
 
 	@Autowired
-	private VendaService service;
+	private ReservaService service;
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Reserva> find(@PathVariable Integer id) {
 		
-		Venda obj = service.buscar(id);
+		Reserva obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 
 	}
