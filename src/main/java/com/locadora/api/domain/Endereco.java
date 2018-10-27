@@ -11,6 +11,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Endereco implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +23,8 @@ public class Endereco implements Serializable {
 	private String cep;
 	private String cidade;
 	private String estado;
+	
+	private Cliente cliente;
 
 	public Integer getId() {
 		return id;
@@ -31,7 +34,7 @@ public class Endereco implements Serializable {
 	}
 
 	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
-			String cidade, String estado) {
+			String cidade, String estado, Cliente cliente) {
 		super();
 		this.id = id;
 		this.logradouro = logradouro;
@@ -41,6 +44,7 @@ public class Endereco implements Serializable {
 		this.cep = cep;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.setCliente(cliente);
 	}
 
 	public void setId(Integer id) {
@@ -102,6 +106,14 @@ public class Endereco implements Serializable {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public int hashCode() {
@@ -127,5 +139,4 @@ public class Endereco implements Serializable {
 			return false;
 		return true;
 	}
-
 }
