@@ -24,4 +24,12 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> insert(@PathVariable Integer id) {
+
+		Cliente obj = service.buscar(id);
+		return ResponseEntity.ok().body(obj);
+
+	}
 }
