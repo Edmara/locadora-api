@@ -8,19 +8,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Marca implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 
-//	private List<Carro> carros = new ArrayList<>();
+	@OneToMany(mappedBy = "marca")
+	private List<Veiculo> veiculos = new ArrayList<>();
 
 	public Marca() {
-
 	}
 
 	public Marca(Integer id, String nome) {
@@ -45,13 +47,13 @@ public class Marca implements Serializable {
 		this.nome = nome;
 	}
 
-//	public List<Carro> getCarros() {
-//		return carros;
-//	}
-//
-//	public void setCarros(List<Carro> carros) {
-//		this.carros = carros;
-//	}
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> carros) {
+		this.veiculos = carros;
+	}
 
 	@Override
 	public int hashCode() {

@@ -2,12 +2,19 @@ package com.locadora.api.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Veiculo implements Serializable {
@@ -18,19 +25,36 @@ public class Veiculo implements Serializable {
 	private Integer id;
 	private String modelo;
 	private String placa;
-	private String valorDiaria;
+	private Double valorDiaria;
 
-//	private List<Marca> marcas = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "marca_id")
+	private Marca marca;
+
+	@JsonIgnore
+	@OneToMany(mappedBy="id.veiculo")
+	private Set<Reserva> reservas = new HashSet<>();
 
 	public Veiculo() {
 	}
 
-	public Veiculo(Integer id, String modelo, String placa, String valorDiaria) {
+	public Veiculo(Integer id, String modelo, String placa, Double valorDiaria) {
 		super();
 		this.id = id;
 		this.modelo = modelo;
 		this.placa = placa;
 		this.valorDiaria = valorDiaria;
+	}
+	
+	@JsonIgnore
+	public List<Venda> getVendas(){
+		List<Venda> lista = new ArrayList<>();
+		
+		for (Reserva reserva : reservas) {
+			lista.add(reserva.getVenda());
+		}
+		
+		return lista;
 	}
 
 	public Integer getId() {
@@ -57,21 +81,29 @@ public class Veiculo implements Serializable {
 		this.placa = placa;
 	}
 
-	public String getValorDiaria() {
+	public Double getValorDiaria() {
 		return valorDiaria;
 	}
 
-	public void setValorDiaria(String valorDiaria) {
+	public void setValorDiaria(Double valorDiaria) {
 		this.valorDiaria = valorDiaria;
 	}
-//
-//	public List<Marca> getMarcas() {
-//		return marcas;
-//	}
-//
-//	public void setMarcas(List<Marca> marcas) {
-//		this.marcas = marcas;
-//	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+
+	public Set<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(Set<Reserva> reservas) {
+		this.reservas = reservas;
+	}
 
 	@Override
 	public int hashCode() {

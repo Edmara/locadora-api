@@ -14,7 +14,7 @@ public class PagamentoService {
 	@Autowired
 	private PagamentoRepository repositorio;
 	
-	public Pagamento buscar(Integer id) {
+	public Pagamento find(Integer id) {
 		
 		Optional<Pagamento> obj = repositorio.findById(id);
 		return obj.orElse(null);

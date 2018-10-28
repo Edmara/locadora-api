@@ -14,7 +14,7 @@ public class VendaService {
 	@Autowired
 	private VendaRepository repositorio;
 	
-	public Venda buscar(Integer id) {
+	public Venda find(Integer id) {
 		
 		Optional<Venda> obj = repositorio.findById(id);
 		return obj.orElse(null);

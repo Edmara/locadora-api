@@ -14,7 +14,7 @@ public class ReservaService {
 	@Autowired
 	private ReservaRepository repositorio;
 	
-	public Reserva buscar(Integer id) {
+	public Reserva find(Integer id) {
 		
 		Optional<Reserva> obj = repositorio.findById(id);
 		return obj.orElse(null);

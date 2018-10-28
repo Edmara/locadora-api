@@ -1,38 +1,62 @@
-package com.locadora.api.domain;
+	package com.locadora.api.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Reserva implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@JsonIgnore
+	@EmbeddedId
+	private ReservaPK id = new ReservaPK();
+
 	private Date dataInicio;
 	private Date dataFim;
+	private Double preco;
 
 	public Reserva() {
 
 	}
 
-	public Reserva(Integer id, Date dataInicio, Date dataFim) {
+	public Reserva(Venda venda, Veiculo veiculo, Date dataInicio, Date dataFim, Double preco) {
 		super();
-		this.id = id;
+		id.setVenda(venda);
+		id.setVeiculo(veiculo);
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
+		this.preco = preco;
+	}
+	
+	public double getSubTotal(LocalDate dataInicio, LocalDate dataFim) {
+		Long quantidadeDias = ChronoUnit.DAYS.between(dataInicio, dataFim);
+		return preco * quantidadeDias;
+	}
+	
+	
+	@JsonIgnore
+	public Venda getVenda() {
+		return id.getVenda();
+	}
+	
+	public Veiculo getVeiculo() {
+		return id.getVeiculo();
 	}
 
-	public Integer getId() {
+	public ReservaPK getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(ReservaPK id) {
 		this.id = id;
 	}
 
@@ -50,6 +74,14 @@ public class Reserva implements Serializable {
 
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
 	@Override
@@ -76,4 +108,6 @@ public class Reserva implements Serializable {
 			return false;
 		return true;
 	}
+
+	
 }

@@ -1,30 +1,64 @@
 package com.locadora.api.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Venda implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Date nome;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+	private Date dataCompra;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "venda")
+	private Pagamento pagamento;
+
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+
+	@OneToMany(mappedBy="id.venda")
+	private Set<Reserva> reservas = new HashSet<>();
 
 	public Venda() {
 
 	}
 
-	public Venda(Integer id, Date nome) {
+	public Venda(Integer id, Date dataCompra, Pagamento pagamento, Cliente cliente) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.dataCompra = dataCompra;
+		this.pagamento = pagamento;
+		this.cliente = cliente;
+		
 	}
+	
+//	public double getValorTotal() {
+//		double soma = 0.0;
+//		for (Reserva reserva : itens) {
+//			soma = soma + reserva.getSubTotal(dataInicio, dataFim);
+//		}
+//		return soma;
+//	}
 
 	public Integer getId() {
 		return id;
@@ -34,12 +68,36 @@ public class Venda implements Serializable {
 		this.id = id;
 	}
 
-	public Date getNome() {
-		return nome;
+	public Date getDataCompra() {
+		return dataCompra;
 	}
 
-	public void setNome(Date nome) {
-		this.nome = nome;
+	public void setDataCompra(Date dataCompra) {
+		this.dataCompra = dataCompra;
+	}
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Set<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(Set<Reserva> reservas) {
+		this.reservas = reservas;
 	}
 
 	@Override
@@ -66,4 +124,5 @@ public class Venda implements Serializable {
 			return false;
 		return true;
 	}
+
 }
