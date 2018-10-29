@@ -7,23 +7,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class ReservaPK implements Serializable{
+public class AluguelPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name="venda_id")
-	private Venda venda;
+	@JoinColumn(name="transacao_id")
+	private Transacao transacao;
 	
 	@ManyToOne
 	@JoinColumn(name="veiculo_id")
 	private Veiculo veiculo;
 	
 	
-	public Venda getVenda() {
-		return venda;
+	public Transacao getTransacao() {
+		return transacao;
 	}
-	public void setVenda(Venda venda) {
-		this.venda = venda;
+	public void setTransacao(Transacao transacao) {
+		this.transacao = transacao;
 	}
 	public Veiculo getVeiculo() {
 		return veiculo;
@@ -36,7 +36,7 @@ public class ReservaPK implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((veiculo == null) ? 0 : veiculo.hashCode());
-		result = prime * result + ((venda == null) ? 0 : venda.hashCode());
+		result = prime * result + ((transacao == null) ? 0 : transacao.hashCode());
 		return result;
 	}
 	@Override
@@ -47,16 +47,16 @@ public class ReservaPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ReservaPK other = (ReservaPK) obj;
+		AluguelPK other = (AluguelPK) obj;
 		if (veiculo == null) {
 			if (other.veiculo != null)
 				return false;
 		} else if (!veiculo.equals(other.veiculo))
 			return false;
-		if (venda == null) {
-			if (other.venda != null)
+		if (transacao == null) {
+			if (other.transacao != null)
 				return false;
-		} else if (!venda.equals(other.venda))
+		} else if (!transacao.equals(other.transacao))
 			return false;
 		return true;
 	}

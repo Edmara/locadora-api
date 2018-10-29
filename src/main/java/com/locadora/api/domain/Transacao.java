@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class Venda implements Serializable {
+public class Transacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -36,14 +36,14 @@ public class Venda implements Serializable {
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
-	@OneToMany(mappedBy="id.venda")
-	private Set<Reserva> reservas = new HashSet<>();
+	@OneToMany(mappedBy="id.transacao")
+	private Set<Aluguel> reservas = new HashSet<>();
 
-	public Venda() {
+	public Transacao() {
 
 	}
 
-	public Venda(Integer id, Date dataCompra, Pagamento pagamento, Cliente cliente) {
+	public Transacao(Integer id, Date dataCompra, Pagamento pagamento, Cliente cliente) {
 		super();
 		this.id = id;
 		this.dataCompra = dataCompra;
@@ -92,11 +92,11 @@ public class Venda implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Set<Reserva> getReservas() {
+	public Set<Aluguel> getReservas() {
 		return reservas;
 	}
 
-	public void setReservas(Set<Reserva> reservas) {
+	public void setReservas(Set<Aluguel> reservas) {
 		this.reservas = reservas;
 	}
 
@@ -116,7 +116,7 @@ public class Venda implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Venda other = (Venda) obj;
+		Transacao other = (Transacao) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

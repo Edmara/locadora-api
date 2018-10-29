@@ -11,11 +11,13 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.locadora.api.domain.enums.StatusPagamento;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Pagamento implements Serializable {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -24,18 +26,18 @@ public class Pagamento implements Serializable {
 
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="venda_id")
+	@JoinColumn(name="transacao_id")
 	@MapsId
-	private Venda venda;
+	private Transacao transacao;
 
 	public Pagamento() {
 	}
 
-	public Pagamento(Integer id, StatusPagamento status, Venda venda) {
+	public Pagamento(Integer id, StatusPagamento status, Transacao transacao) {
 		super();
 		this.id = id;
 		this.status = (status==null) ? null : status.getCod();
-		this.venda = venda;
+		this.transacao = transacao;
 	}
 
 	public Integer getId() {
@@ -54,12 +56,12 @@ public class Pagamento implements Serializable {
 		this.status = status.getCod();
 	}
 
-	public Venda getVenda() {
-		return venda;
+	public Transacao getTransacao() {
+		return transacao;
 	}
 
-	public void setVenda(Venda venda) {
-		this.venda = venda;
+	public void setTransacao(Transacao transacao) {
+		this.transacao = transacao;
 	}
 
 	@Override

@@ -26,6 +26,7 @@ public class Veiculo implements Serializable {
 	private String modelo;
 	private String placa;
 	private Double valorDiaria;
+	private String status;
 
 	@ManyToOne
 	@JoinColumn(name = "marca_id")
@@ -33,7 +34,7 @@ public class Veiculo implements Serializable {
 
 	@JsonIgnore
 	@OneToMany(mappedBy="id.veiculo")
-	private Set<Reserva> reservas = new HashSet<>();
+	private Set<Aluguel> reservas = new HashSet<>();
 
 	public Veiculo() {
 	}
@@ -47,11 +48,11 @@ public class Veiculo implements Serializable {
 	}
 	
 	@JsonIgnore
-	public List<Venda> getVendas(){
-		List<Venda> lista = new ArrayList<>();
+	public List<Transacao> getTransacoes(){
+		List<Transacao> lista = new ArrayList<>();
 		
-		for (Reserva reserva : reservas) {
-			lista.add(reserva.getVenda());
+		for (Aluguel reserva : reservas) {
+			lista.add(reserva.getTransacao());
 		}
 		
 		return lista;
@@ -97,11 +98,11 @@ public class Veiculo implements Serializable {
 		this.marca = marca;
 	}
 
-	public Set<Reserva> getReservas() {
+	public Set<Aluguel> getReservas() {
 		return reservas;
 	}
 
-	public void setReservas(Set<Reserva> reservas) {
+	public void setReservas(Set<Aluguel> reservas) {
 		this.reservas = reservas;
 	}
 
@@ -128,6 +129,14 @@ public class Veiculo implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

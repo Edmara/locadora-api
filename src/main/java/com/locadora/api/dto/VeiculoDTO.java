@@ -2,22 +2,32 @@ package com.locadora.api.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 public class VeiculoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String modelo;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String placa;
+
 	private Double valorDiaria;
+	
+	private String marca;
 	
 	public VeiculoDTO() {
 	}
 
-	public VeiculoDTO(Integer id, String modelo, String placa, Double valorDiaria) {
+	public VeiculoDTO(Integer id, String modelo, String placa, Double valorDiaria, String marca) {
 		super();
 		this.id = id;
 		this.modelo = modelo;
 		this.placa = placa;
 		this.valorDiaria = valorDiaria;
+		this.marca = marca;
 	}
 
 	public Integer getId() {
@@ -41,6 +51,7 @@ public class VeiculoDTO implements Serializable {
 	}
 
 	public void setPlaca(String placa) {
+		this.placa = placa;
 	}
 
 	public Double getValorDiaria() {
@@ -49,6 +60,14 @@ public class VeiculoDTO implements Serializable {
 
 	public void setValorDiaria(Double valorDiaria) {
 		this.valorDiaria = valorDiaria;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 	
 }

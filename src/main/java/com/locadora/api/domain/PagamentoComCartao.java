@@ -2,9 +2,11 @@ package com.locadora.api.domain;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.locadora.api.domain.enums.StatusPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento {
 	private static final long serialVersionUID = 1L;
 
@@ -14,8 +16,8 @@ public class PagamentoComCartao extends Pagamento {
 
 	}
 
-	public PagamentoComCartao(Integer id, StatusPagamento status, Venda venda, Integer numeroParcelas) {
-		super(id, status, venda);
+	public PagamentoComCartao(Integer id, StatusPagamento status, Transacao transacao, Integer numeroParcelas) {
+		super(id, status, transacao);
 		this.numeroParcelas = numeroParcelas;
 	}
 

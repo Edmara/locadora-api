@@ -13,31 +13,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.locadora.api.domain.Veiculo;
-import com.locadora.api.dto.VeiculoDTO;
-import com.locadora.api.services.VeiculoService;
+import com.locadora.api.domain.Aluguel;
+import com.locadora.api.domain.Cliente;
+import com.locadora.api.dto.AluguelNewDTO;
+import com.locadora.api.services.AluguelService;
 
 @RestController
-@RequestMapping(value = "/veiculos")
-public class VeiculoResource {
+@RequestMapping(value = "/alugueis")
+public class AluguelResource {
 
 	@Autowired
-	private VeiculoService service;
+	private AluguelService service;
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Veiculo> find(@PathVariable Integer id) {
+	public ResponseEntity<Aluguel> find(@PathVariable Integer id) {
 		
-		Veiculo obj = service.find(id);
+		Aluguel obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody VeiculoDTO veiculoDto) {
-		Veiculo veiculo = service.fromDTO(veiculoDto);
-		veiculo = service.insert(veiculo);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(veiculo.getId()).toUri();
+	public ResponseEntity<Void> insert(@Valid @RequestBody AluguelNewDTO aluguelDto) {
+		Aluguel aluguel= service.fromDTO(aluguelDto);
+		aluguel= service.insert(aluguel);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(aluguel.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	

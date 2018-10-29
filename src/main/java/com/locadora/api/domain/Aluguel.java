@@ -2,9 +2,7 @@
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,24 +11,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class Reserva implements Serializable {
+public class Aluguel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
 	@EmbeddedId
-	private ReservaPK id = new ReservaPK();
+	private AluguelPK id = new AluguelPK();
 
-	private Date dataInicio;
-	private Date dataFim;
+	private LocalDate dataInicio;
+	private LocalDate dataFim;
 	private Double preco;
 
-	public Reserva() {
+	public Aluguel() {
 
 	}
 
-	public Reserva(Venda venda, Veiculo veiculo, Date dataInicio, Date dataFim, Double preco) {
+	public Aluguel(Transacao transacao, Veiculo veiculo, LocalDate dataInicio, LocalDate dataFim, Double preco) {
 		super();
-		id.setVenda(venda);
+		id.setTransacao(transacao);
 		id.setVeiculo(veiculo);
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
@@ -44,35 +42,43 @@ public class Reserva implements Serializable {
 	
 	
 	@JsonIgnore
-	public Venda getVenda() {
-		return id.getVenda();
+	public Transacao getTransacao() {
+		return id.getTransacao();
 	}
 	
 	public Veiculo getVeiculo() {
 		return id.getVeiculo();
 	}
+	
+	public void setTransacao(Transacao transacao) {
+		id.setTransacao(transacao);
+	}	
 
-	public ReservaPK getId() {
+	public void setTransacao(Veiculo veiculo) {
+		 id.setVeiculo(veiculo);
+	}
+	
+	public AluguelPK getId() {
 		return id;
 	}
 
-	public void setId(ReservaPK id) {
+	public void setId(AluguelPK id) {
 		this.id = id;
 	}
 
-	public Date getDataInicio() {
+	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(LocalDate dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	public Date getDataFim() {
+	public LocalDate getDataFim() {
 		return dataFim;
 	}
 
-	public void setDataFim(Date dataFim) {
+	public void setDataFim(LocalDate dataFim) {
 		this.dataFim = dataFim;
 	}
 
@@ -100,7 +106,7 @@ public class Reserva implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Reserva other = (Reserva) obj;
+		Aluguel other = (Aluguel) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
