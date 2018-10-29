@@ -16,11 +16,10 @@ public class PagamentoResource {
 
 	@Autowired
 	private PagamentoService service;
-	
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Pagamento> find(@PathVariable Integer id) {
-		
+
 		Pagamento obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 

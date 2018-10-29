@@ -1,4 +1,4 @@
-	package com.locadora.api.domain;
+package com.locadora.api.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -8,7 +8,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 public class Aluguel implements Serializable {
@@ -34,30 +33,29 @@ public class Aluguel implements Serializable {
 		this.dataFim = dataFim;
 		this.preco = preco;
 	}
-	
+
 	public double getSubTotal(LocalDate dataInicio, LocalDate dataFim) {
 		Long quantidadeDias = ChronoUnit.DAYS.between(dataInicio, dataFim);
 		return preco * quantidadeDias;
 	}
-	
-	
+
 	@JsonIgnore
 	public Transacao getTransacao() {
 		return id.getTransacao();
 	}
-	
+
 	public Veiculo getVeiculo() {
 		return id.getVeiculo();
 	}
-	
+
 	public void setTransacao(Transacao transacao) {
 		id.setTransacao(transacao);
-	}	
+	}
 
 	public void setTransacao(Veiculo veiculo) {
-		 id.setVeiculo(veiculo);
+		id.setVeiculo(veiculo);
 	}
-	
+
 	public AluguelPK getId() {
 		return id;
 	}
@@ -115,5 +113,4 @@ public class Aluguel implements Serializable {
 		return true;
 	}
 
-	
 }

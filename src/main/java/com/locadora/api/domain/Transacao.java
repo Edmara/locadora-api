@@ -29,7 +29,7 @@ public class Transacao implements Serializable {
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dataCompra;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "venda")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "transacao")
 	private Pagamento pagamento;
 
 	@ManyToOne
@@ -51,14 +51,6 @@ public class Transacao implements Serializable {
 		this.cliente = cliente;
 		
 	}
-	
-//	public double getValorTotal() {
-//		double soma = 0.0;
-//		for (Reserva reserva : itens) {
-//			soma = soma + reserva.getSubTotal(dataInicio, dataFim);
-//		}
-//		return soma;
-//	}
 
 	public Integer getId() {
 		return id;

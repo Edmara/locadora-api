@@ -5,6 +5,9 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: maven:3.3.9
 
+clone:
+ depth: full
+
 pipelines:
   default:
     - step:
@@ -19,9 +22,5 @@ pipelines:
           - maven
         script:
           - mvn -B compile
-    - step:
-        name: Maven Package Build
-        caches:
-          - maven
-        script:
-          - mvn -B package
+          - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
+          

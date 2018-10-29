@@ -33,7 +33,7 @@ public class Veiculo implements Serializable {
 	private Marca marca;
 
 	@JsonIgnore
-	@OneToMany(mappedBy="id.veiculo")
+	@OneToMany(mappedBy = "id.veiculo")
 	private Set<Aluguel> reservas = new HashSet<>();
 
 	public Veiculo() {
@@ -46,15 +46,15 @@ public class Veiculo implements Serializable {
 		this.placa = placa;
 		this.valorDiaria = valorDiaria;
 	}
-	
+
 	@JsonIgnore
-	public List<Transacao> getTransacoes(){
+	public List<Transacao> getTransacoes() {
 		List<Transacao> lista = new ArrayList<>();
-		
+
 		for (Aluguel reserva : reservas) {
 			lista.add(reserva.getTransacao());
 		}
-		
+
 		return lista;
 	}
 
